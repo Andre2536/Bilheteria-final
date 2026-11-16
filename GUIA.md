@@ -15,15 +15,15 @@ O `package.json` e o `tsconfig.json` já vêm prontos. Dentro da pasta do reposi
 npm install
 ```
 
-Confira: `npm test` roda e mostra `0 de 16`. Os arquivos de `src/` estão vazios, por isso os testes falham.
+Confira: `npm test` roda e mostra `0 de 16`. Os arquivos que vocês escrevem estão vazios, por isso os testes falham.
 
 Os imports levam a extensão: `import { Evento } from "./dominio.ts";`. O `tsx` roda o código mesmo
 com erro de tipo, então rode o `npm run typecheck` de vez em quando.
 
 ## 2. Express em uma página
 
-Exemplo com **outro** assunto (uma lista de tarefas), só para mostrar as peças. Não copie: adapte ao
-contrato do enunciado.
+O `servidor.ts` do projeto vem pronto. Este exemplo, com **outro** assunto (uma lista de tarefas),
+mostra as peças que ele usa, para vocês lerem o arquivo e explicarem no vídeo.
 
 ```ts
 // src/exemplo.ts
@@ -86,8 +86,8 @@ Sem o cabeçalho `Content-Type: application/json`, o `express.json()` não lê o
 
 ## 3. Ordem sugerida
 
-1. `tipos.ts`, `regras.ts` e `preco.ts`: não dependem de nada. Rode `npm test` a cada função.
+1. Ler o `tipos.ts` (pronto). Depois `regras.ts` e `preco.ts`: não dependem de nada. Rode `npm test` a cada função.
 2. `dominio.ts`: os erros e o `Evento`.
 3. `bilheteria.ts`: usa os três anteriores e a operadora de `pagamento.ts`.
-4. `servidor.ts` e `main.ts`. Depois, `npm start` num terminal e `npm run bench` em outro.
+4. `main.ts` (o `servidor.ts` vem pronto). Depois, `npm start` num terminal e `npm run bench` em outro.
 5. `README.md`.

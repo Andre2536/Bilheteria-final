@@ -2,19 +2,19 @@
 
 Projeto final de Paradigmas de Linguagens de Programação. Enunciado completo no Blackboard.
 
-Os arquivos de `src/` que vocês escrevem já existem, vazios. O que vai em cada um está no passo
+Os arquivos de `src/` que vocês escrevem já existem, vazios; o `tipos.ts` e o `servidor.ts` vêm prontos. O que vai em cada um está no passo
 indicado do enunciado:
 
 | Arquivo | Passo do enunciado |
 | :--- | :--- |
-| `src/tipos.ts` | 1: as entidades |
+| `src/tipos.ts` (pronto) | 1: os tipos |
 | `src/regras.ts` | 2: meia-entrada |
 | `src/preco.ts` | 3: preço (funcional) |
 | `src/dominio.ts` | 4: evento e erros (orientado a objetos) |
-| `src/bilheteria.ts` | 5: a venda (concorrente) |
-| `src/servidor.ts` e `src/main.ts` | 6: o servidor |
+| `src/bilheteria.ts` | 5: a venda, onde a concorrência aparece |
+| `src/servidor.ts` (pronto) e `src/main.ts` | 6: ligar o servidor |
 
-Não alterem `src/pagamento.ts`, `src/bench.ts` nem `testes/`: a correção usa os originais.
+Não alterem `src/pagamento.ts`, `src/servidor.ts`, `src/bench.ts` nem `testes/`: a correção usa os originais.
 
 Para começar, sigam o `GUIA.md`. Depois dele, os comandos são:
 
@@ -60,10 +60,8 @@ curl -X POST localhost:3000/reservas -H 'Content-Type: application/json' \
 | Cenário | Pedidos | Tempo (ms) | Vendidos | Poltrona ocupada | Falha de pagamento |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | Padrão (`main.ts`) | 200 | | | | |
-| Operadora lenta (`latenciaMs: 400`) | 200 | | | | |
-| Operadora instável (`taxaDeFalha: 0.5`) | 200 | | | | |
 
-Cada cenário: mudem o `main.ts`, parem o `npm start` (Ctrl+C) e subam de novo. O bench ocupa as poltronas do
-evento 1, então rodar duas vezes sem reiniciar dá tudo ocupado.
+O bench ocupa as poltronas do evento 1: para rodar de novo, parem o `npm start` (Ctrl+C) e subam outra
+vez.
 
 O que os números mostram:
