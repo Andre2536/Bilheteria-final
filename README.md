@@ -36,7 +36,7 @@ curl -X POST localhost:3000/reservas -H 'Content-Type: application/json' \
 
 ## Preencham (avaliado no vídeo)
 
-**Link do vídeo:** *(preencher com o link do vídeo)*
+**Link do vídeo: https://drive.google.com/file/d/1qmxywO_FaMR7onFjqkDeQoQoAkMSE1MZ/view?usp=sharing
 
 ### Integrantes
 
@@ -48,7 +48,7 @@ curl -X POST localhost:3000/reservas -H 'Content-Type: application/json' \
 
 1. **Concorrência.** Como vocês garantem que duas pessoas não ficam com a mesma poltrona? Onde estava o
    `await` perigoso?
-   > Garantimos que nenhuma poltrona seja vendida duas vezes marcando as poltronas como ocupadas (`evento.reservar(poltronas)`) de forma síncrona **antes** do `await` da operadora de pagamento. Como o JavaScript no Node.js executa o código síncrono de forma atômica até o próximo `await`, o segundo pedido concorrente pela mesma poltrona já a encontra reservada e recebe `PoltronaOcupadaErro` (HTTP 409) sem sequer ir para cobrança. O `await` perigoso seria justamente deixar o `await pagar(total)` antes de marcar as poltronas: enquanto o primeiro pedido aguardasse a operadora responder, outro pedido veria a poltrona livre e ambos cobrariam e venderiam o mesmo lugar. Além disso, usamos `comTempoLimite` (para não travar indefinidamente numa operadora lenta) e `evento.liberar(poltronas)` no `catch` (para devolver os lugares caso o pagamento falhe ou expire).
+   > Garanti que nenhuma poltrona seja vendida duas vezes marcando as poltronas como ocupadas (`evento.reservar(poltronas)`) de forma síncrona **antes** do `await` da operadora de pagamento. Como o JavaScript no Node.js executa o código síncrono de forma atômica até o próximo `await`, o segundo pedido concorrente pela mesma poltrona já a encontra reservada e recebe `PoltronaOcupadaErro` (HTTP 409) sem sequer ir para cobrança. O `await` perigoso seria justamente deixar o `await pagar(total)` antes de marcar as poltronas: enquanto o primeiro pedido aguardasse a operadora responder, outro pedido veria a poltrona livre e ambos cobrariam e venderiam o mesmo lugar. Além disso, usamos `comTempoLimite` (para não travar indefinidamente numa operadora lenta) e `evento.liberar(poltronas)` no `catch` (para devolver os lugares caso o pagamento falhe ou expire).
 
 2. **OO.** O que o `Evento` esconde e por quê? Por que o `reservar` é tudo ou nada? Por que os erros são uma hierarquia de classes?
    > O `Evento` esconde a lista de poltronas vendidas no campo privado `#vendidas`, expondo apenas a contagem de vagas restantes via `get disponivel()` e operações controladas (`reservar`, `liberar`, `info`). Isso protege a invariante de negócio: nenhum código externo consegue corromper diretamente o estado das poltronas ou burlar validações. O `reservar` é tudo ou nada (valida todas as poltronas antes de gravar qualquer uma) para evitar reservas parciais num pedido de grupo/família caso uma única poltrona seja inválida ou já esteja ocupada. Já a hierarquia de erros (`ErroDeNegocio` abstrata com `status` HTTP e subclasses específicas) permite que cada regra de domínio sinalize o erro pelo tipo e que o Express em `servidor.ts` trate todos uniformemente com um único `instanceof ErroDeNegocio`, sem acoplar a regra de negócio ao HTTP nem espalhar `if/else` de mensagens.
